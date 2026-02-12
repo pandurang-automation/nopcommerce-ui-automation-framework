@@ -1,4 +1,4 @@
-# NopCommerce Enterprise UI Automation Framework
+~~# NopCommerce Enterprise UI Automation Framework
 
 ## 📌 Overview
 Enterprise-grade UI automation framework built using:
@@ -57,5 +57,5 @@ Execution instructions will be added after the framework implementation is compl
 
 ## 👨‍💻 Author
 
-Pandurang Choudhari
+Pandurang Choudhari~~
 
