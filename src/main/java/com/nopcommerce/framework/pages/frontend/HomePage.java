@@ -2,6 +2,8 @@ package com.nopcommerce.framework.pages.frontend;
 
 import com.nopcommerce.framework.config.ConfigReader;
 import com.nopcommerce.framework.pages.BasePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * HomePage
@@ -20,11 +22,13 @@ import com.nopcommerce.framework.pages.BasePage;
  */
 public class HomePage extends BasePage {
 
+    private static final Logger logger = LogManager.getLogger(HomePage.class);
 
     /**
      * Navigates to frontend URL from configuration.
      */
     public void navigateToHomePage() {
+        logger.info("Navigating to frontend homepage");
         String url = ConfigReader.getInstance().getFrontendUrl();
         getDriver().get(url);
     }

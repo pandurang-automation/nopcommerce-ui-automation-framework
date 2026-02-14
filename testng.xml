@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UI Automation Suite">
+
+    <test name="Frontend Tests">
+        <classes>
+            <class name="com.nopcommerce.tests.HomePageTest"/>
+        </classes>
+    </test>
+
+</suite>
