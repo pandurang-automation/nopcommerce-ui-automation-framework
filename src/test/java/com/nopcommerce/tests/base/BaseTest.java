@@ -5,6 +5,9 @@ import com.nopcommerce.framework.driver.DriverFactory;
 import com.nopcommerce.framework.driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
+import org.testng.ITestResult;
+import com.nopcommerce.framework.utils.ScreenshotUtils;
+
 
 import java.time.Duration;
 
@@ -64,7 +67,17 @@ public abstract class BaseTest {
      * even if test fails or is skipped.
      */
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
+    public void tearDown(ITestResult result) {
+
+        if (ITestResult.FAILURE == result.getStatus()) {
+
+            String testName = result.getName();
+            String screenshotPath = ScreenshotUtils.captureScreenshot(testName);
+
+            System.out.println("Screenshot captured at: " + screenshotPath);
+        }
+
         DriverManager.quitDriver();
     }
+
 }

@@ -1,21 +1,24 @@
 package com.nopcommerce.framework.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
+
 
 /**
  * ConfigReader
- *
+ * <p>
  * Architectural Responsibility:
  * ------------------------------
  * Centralized configuration management.
- *
+ * <p>
  * This class:
- * - Loads configuration properties from config.properties file
+ * - Loads configuration properties from environment-specific config file.
  * - Provides getter methods for accessing configuration values
  * - Ensures configuration is loaded only once (Singleton pattern)
- *
+ * <p>
  * Why Singleton?
  * --------------
  * - Prevents multiple file reads
@@ -47,18 +50,48 @@ public class ConfigReader {
     }
 
     /**
-     * Loads properties from config.properties file.
+     *Loads configuration properties from environment-specific config file.
      */
     private void loadProperties() {
         properties = new Properties();
-        try {
-            FileInputStream fileInputStream =
-                    new FileInputStream("src/main/resources/config/config.properties");
-            properties.load(fileInputStream);
+
+        // Read environment from system property
+        String env = System.getProperty("env");
+
+        // Default to QA if not provided
+        if (env == null || env.isBlank()) {
+            env = "qa";
+        }
+
+        // Allowed environments
+        List<String> allowedEnvs = Arrays.asList("dev", "qa", "stage");
+
+        if (!allowedEnvs.contains(env)) {
+            throw new IllegalArgumentException(
+                    "Invalid environment: " + env +
+                            ". Allowed values: dev, qa, stage");
+        }
+
+        String fileName = "config/config-" + env + ".properties";
+
+        try (InputStream inputStream =
+                     Thread.currentThread()
+                             .getContextClassLoader()
+                             .getResourceAsStream(fileName)) {
+
+            if (inputStream == null) {
+                throw new RuntimeException("Configuration file not found: " + fileName);
+            }
+
+            properties.load(inputStream);
+            System.out.println("Loaded configuration for environment: " + env);
+
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load configuration file", e);
+            throw new RuntimeException(
+                    "Failed to load configuration file for environment: " + env, e);
         }
     }
+
 
     public String getBrowser() {
         return properties.getProperty("browser");

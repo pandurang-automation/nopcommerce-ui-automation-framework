@@ -7,9 +7,9 @@ import org.testng.annotations.Test;
 
 /**
  * HomePageTest
- *
+
  * Validates basic functionality of the frontend homepage.
- *
+
  * This test ensures:
  * - Driver lifecycle works
  * - Page navigation works
@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
  */
 public class HomePageTest extends BaseTest {
 
-    @Test
+    @Test(enabled = true)
     public void verifyHomePageTitle() {
 
         HomePage homePage = new HomePage();
@@ -30,4 +30,17 @@ public class HomePageTest extends BaseTest {
         String actualTitle = homePage.getPageTitleText();
         Assert.assertEquals(actualTitle, "nopCommerce demo store. Home page title");
     }
+
+    @Test(enabled = true)
+    public void verifyHomePageTitleSecond() {
+
+        HomePage homePage = new HomePage();
+
+        homePage.navigateToHomePage();
+
+        String actualTitle = homePage.getPageTitleText();
+
+        Assert.assertEquals(actualTitle, "nopCommerce demo store. Home page title");
+    }
+
 }
