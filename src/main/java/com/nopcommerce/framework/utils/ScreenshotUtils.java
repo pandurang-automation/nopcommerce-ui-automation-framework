@@ -25,7 +25,8 @@ public class ScreenshotUtils {
                 .format(new Date());
 
         String screenshotDir = "target/screenshots";
-        String filePath = screenshotDir + "/" + testName + "_" + timestamp + ".png";
+        String fileName = testName + "_" + timestamp + ".png";
+        String filePath = screenshotDir + "/" + fileName;
 
         try {
             File directory = new File(screenshotDir);
@@ -39,6 +40,7 @@ public class ScreenshotUtils {
             throw new RuntimeException("Failed to capture screenshot", e);
         }
 
-        return filePath;
+        return "screenshots/" + fileName;   //
     }
+
 }

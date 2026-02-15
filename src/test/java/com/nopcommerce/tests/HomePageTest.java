@@ -1,11 +1,11 @@
 package com.nopcommerce.tests;
-
+import com.nopcommerce.tests.retry.RetryAnalyzer;
 import com.nopcommerce.tests.base.BaseTest;
 import com.nopcommerce.framework.pages.frontend.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
+/** 
  * HomePageTest
 
  * Validates basic functionality of the frontend homepage.
@@ -18,7 +18,8 @@ import org.testng.annotations.Test;
  */
 public class HomePageTest extends BaseTest {
 
-    @Test(enabled = true)
+    @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class)
+
     public void verifyHomePageTitle() {
 
         HomePage homePage = new HomePage();
@@ -28,10 +29,10 @@ public class HomePageTest extends BaseTest {
 
         // Validate page title
         String actualTitle = homePage.getPageTitleText();
-        Assert.assertEquals(actualTitle, "nopCommerce demo store. Home page title");
+        Assert.assertEquals(actualTitle, "Wrong Title");
     }
 
-    @Test(enabled = true)
+    @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class)
     public void verifyHomePageTitleSecond() {
 
         HomePage homePage = new HomePage();
