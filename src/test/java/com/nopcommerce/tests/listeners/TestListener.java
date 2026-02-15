@@ -3,20 +3,30 @@ package com.nopcommerce.tests.listeners;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.openqa.selenium.WebDriver;
-import com.nopcommerce.framework.driver.DriverManager;
+import org.testng.IAnnotationTransformer;
+import org.testng.annotations.ITestAnnotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import com.nopcommerce.framework.utils.ScreenshotUtils;
-
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-
 import com.nopcommerce.framework.utils.ReportManager;
+import com.nopcommerce.tests.retry.RetryAnalyzer;
 
-public class TestListener implements ITestListener {
+public class TestListener implements ITestListener, IAnnotationTransformer {
 
     private static ExtentReports extent = ReportManager.getInstance();
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+
+
+    @Override
+    public void transform(ITestAnnotation annotation,
+                          Class testClass,
+                          Constructor testConstructor,
+                          Method testMethod) {
+
+        annotation.setRetryAnalyzer(RetryAnalyzer.class);
+    }
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -35,16 +45,12 @@ public class TestListener implements ITestListener {
         test.get().fail(result.getThrowable());
 
         try {
-
             String screenshotPath = ScreenshotUtils.captureScreenshot(result.getMethod().getMethodName());
-
             test.get().addScreenCaptureFromPath(screenshotPath);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onFinish(ITestContext context) {

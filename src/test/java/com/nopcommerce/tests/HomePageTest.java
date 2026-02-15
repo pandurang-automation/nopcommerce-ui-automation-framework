@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
  */
 public class HomePageTest extends BaseTest {
 
-    @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 1)
 
     public void verifyHomePageTitle() {
 
@@ -32,7 +32,7 @@ public class HomePageTest extends BaseTest {
         Assert.assertEquals(actualTitle, "Wrong Title");
     }
 
-    @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 2)
     public void verifyHomePageTitleSecond() {
 
         HomePage homePage = new HomePage();
