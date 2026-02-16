@@ -1,4 +1,4 @@
-package com.nopcommerce.tests.retry;
+package com.ultron.tests.retry;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;

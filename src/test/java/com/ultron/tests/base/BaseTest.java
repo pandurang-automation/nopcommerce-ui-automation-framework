@@ -1,15 +1,12 @@
-package com.nopcommerce.tests.base;
+package com.ultron.tests.base;
 
-import com.nopcommerce.framework.config.ConfigReader;
-import com.nopcommerce.framework.driver.DriverFactory;
-import com.nopcommerce.framework.driver.DriverManager;
+import com.ultron.framework.config.ConfigReader;
+import com.ultron.framework.driver.DriverFactory;
+import com.ultron.framework.driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.ITestResult;
-import com.nopcommerce.framework.utils.ScreenshotUtils;
-
-
-import java.time.Duration;
+import com.ultron.framework.utils.ScreenshotUtils;
 
 /**
  * BaseTest

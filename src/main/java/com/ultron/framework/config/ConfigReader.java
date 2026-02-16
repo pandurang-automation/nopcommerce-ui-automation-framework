@@ -1,4 +1,4 @@
-package com.nopcommerce.framework.config;
+package com.ultron.framework.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +50,7 @@ public class ConfigReader {
     }
 
     /**
-     *Loads configuration properties from environment-specific config file.
+     * Loads configuration properties from environment-specific config file.
      */
     private void loadProperties() {
         properties = new Properties();
@@ -67,17 +67,12 @@ public class ConfigReader {
         List<String> allowedEnvs = Arrays.asList("dev", "qa", "stage");
 
         if (!allowedEnvs.contains(env)) {
-            throw new IllegalArgumentException(
-                    "Invalid environment: " + env +
-                            ". Allowed values: dev, qa, stage");
+            throw new IllegalArgumentException("Invalid environment: " + env + ". Allowed values: dev, qa, stage");
         }
 
         String fileName = "config/config-" + env + ".properties";
 
-        try (InputStream inputStream =
-                     Thread.currentThread()
-                             .getContextClassLoader()
-                             .getResourceAsStream(fileName)) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)) {
 
             if (inputStream == null) {
                 throw new RuntimeException("Configuration file not found: " + fileName);
@@ -87,14 +82,21 @@ public class ConfigReader {
             System.out.println("Loaded configuration for environment: " + env);
 
         } catch (IOException e) {
-            throw new RuntimeException(
-                    "Failed to load configuration file for environment: " + env, e);
+            throw new RuntimeException("Failed to load configuration file for environment: " + env, e);
         }
     }
 
 
     public String getBrowser() {
         return properties.getProperty("browser");
+    }
+
+    public String getTestUserEmail() {
+        return properties.getProperty("testUserEmail");
+    }
+
+    public String getTestUserPassword() {
+        return properties.getProperty("testUserPassword");
     }
 
     public String getFrontendUrl() {
@@ -104,6 +106,15 @@ public class ConfigReader {
     public String getAdminUrl() {
         return properties.getProperty("adminUrl");
     }
+
+    public String getAdminEmail() {
+        return properties.getProperty("adminEmail");
+    }
+
+    public String getAdminPassword() {
+        return properties.getProperty("adminPassword");
+    }
+
 
     public int getImplicitWait() {
         return Integer.parseInt(properties.getProperty("implicitWait"));

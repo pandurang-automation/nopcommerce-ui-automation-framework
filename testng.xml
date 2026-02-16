@@ -4,13 +4,15 @@
        thread-count="2">
 
     <listeners>
-        <listener class-name="com.nopcommerce.tests.listeners.TestListener"/>
+        <listener class-name="com.ultron.tests.listeners.TestListener"/>
     </listeners>
 
     <test name="Frontend Tests">
         <classes>
-            <class name="com.nopcommerce.tests.HomePageTest"/>
+
+
         </classes>
+
     </test>
 
 </suite>

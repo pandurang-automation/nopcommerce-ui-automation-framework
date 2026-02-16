@@ -6,8 +6,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.nopcommerce</groupId>
-    <artifactId>nopcommerce-ui-automation-framework</artifactId>
+    <groupId>com.ultron</groupId>
+    <artifactId>ultron-automation-framework</artifactId>
     <version>1.0.0</version>
 
     <!-- ===================== -->
@@ -23,6 +23,7 @@
         <webdrivermanager.version>6.3.3</webdrivermanager.version>
         <restassured.version>5.4.0</restassured.version>
         <surefire.version>3.2.5</surefire.version>
+        <jackson.version>2.15.2</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -36,6 +37,13 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- TestNG -->

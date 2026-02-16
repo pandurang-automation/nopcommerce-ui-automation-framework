@@ -1,6 +1,6 @@
-package com.nopcommerce.framework.utils;
+package com.ultron.framework.utils;
 
-import com.nopcommerce.framework.driver.DriverManager;
+import com.ultron.framework.driver.DriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;

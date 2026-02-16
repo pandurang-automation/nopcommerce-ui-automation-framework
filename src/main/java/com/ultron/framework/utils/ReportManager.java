@@ -1,4 +1,4 @@
-package com.nopcommerce.framework.utils;
+package com.ultron.framework.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

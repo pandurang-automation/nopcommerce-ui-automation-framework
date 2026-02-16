@@ -1,7 +1,7 @@
-package com.nopcommerce.framework.pages;
+package com.ultron.framework.pages;
 
-import com.nopcommerce.framework.driver.DriverManager;
-import com.nopcommerce.framework.utils.WaitUtils;
+import com.ultron.framework.driver.DriverManager;
+import com.ultron.framework.utils.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

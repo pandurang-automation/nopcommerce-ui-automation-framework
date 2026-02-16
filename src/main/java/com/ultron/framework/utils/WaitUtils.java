@@ -1,7 +1,7 @@
-package com.nopcommerce.framework.utils;
+package com.ultron.framework.utils;
 
-import com.nopcommerce.framework.config.ConfigReader;
-import com.nopcommerce.framework.driver.DriverManager;
+import com.ultron.framework.config.ConfigReader;
+import com.ultron.framework.driver.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
