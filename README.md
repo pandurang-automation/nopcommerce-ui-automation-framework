@@ -1,60 +1,97 @@
-~~# NopCommerce Enterprise UI Automation Framework
+# 🦾 Ultron Automation Framework
 
 ## 📌 Overview
-Enterprise-grade UI automation framework built using:
-- Java
-- Selenium WebDriver
-- TestNG
-- Maven
-- Page Object Model (POM)
 
-Designed with production-level scalability, maintainability, and CI/CD readiness.
+Ultron is a scalable, enterprise-ready test automation framework designed for modern SDET workflows.
+
+Built using:
+
+- Java 17  
+- Selenium WebDriver  
+- TestNG  
+- REST Assured  
+- Maven  
+- Jenkins (CI Integration)  
+
+Ultron is designed to support:
+
+- UI Automation  
+- API Automation  
+- Database Validation  
+- Data-Driven Testing  
+- Parallel Execution  
+- CI/CD Pipelines  
 
 ---
 
 ## 🏗 Architecture
 
-Layered architecture with clear separation:
+Ultron follows a modular layered architecture:
 
-- Base Layer
-- Driver Management Layer
-- Page Objects (Frontend + Admin)
-- Test Layer
-- Utilities
+### 🔹 Core Framework Layer
+- Driver Management
 - Configuration Management
-- Reporting & Logging
-- CI/CD Integration
+- Utilities
+- Reporting
+- Logging
+
+### 🔹 UI Automation Layer
+- Page Object Model (POM)
+- JSON-based Locator Strategy
+- Explicit Wait Handling
+- Screenshot Capture
+
+### 🔹 API Automation Layer
+- REST Assured integration
+- Request/Response validation
+- Schema validation
+- Token-based authentication support
+
+### 🔹 Database Layer
+- JDBC-based validation utilities
+- Query execution and result verification
+
+### 🔹 Test Layer
+- TestNG-based execution
+- Data-driven capability
+- Retry mechanism
+- Listener integration
+- Parallel execution support
 
 ---
 
 ## 🧠 Design Patterns Used
 
-- Page Object Model
-- Factory Pattern (Driver Initialization)
-- Singleton (Config Reader)
-- ThreadLocal (Parallel Execution)
-- Listener Pattern (Reporting)
+- Page Object Model (POM)
+- Factory Pattern (Driver Creation)
+- Singleton Pattern (Configuration Management)
+- ThreadLocal (Parallel Execution Support)
+- Listener Pattern (Reporting & Retry Handling)
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
 - Multi-browser support
-- Multi-environment configuration
-- Parallel execution
+- Environment-based configuration
+- JSON-driven locators
 - Extent Reports integration
 - Log4j2 logging
-- Screenshot on failure
-- CI/CD ready
+- Screenshot capture on failure
+- Jenkins CI integration
+- Scalable modular structure
+- Easily extendable to BDD (Cucumber)
 
 ---
 
 ## ⚙️ Execution
 
-Execution instructions will be added after the framework implementation is completed.
+### ▶ Run Full Test Suite
+
+```bash
+mvn clean test
 
 ---
-
 ## 👨‍💻 Author
 
 Pandurang Choudhari~~
