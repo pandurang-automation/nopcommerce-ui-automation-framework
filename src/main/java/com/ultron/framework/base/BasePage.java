@@ -1,4 +1,4 @@
-package com.ultron.framework.pages;
+package com.ultron.framework.base;
 
 import com.ultron.framework.driver.DriverManager;
 import com.ultron.framework.utils.WaitUtils;
