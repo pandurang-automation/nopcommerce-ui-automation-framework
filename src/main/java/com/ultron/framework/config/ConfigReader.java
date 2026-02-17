@@ -103,6 +103,10 @@ public class ConfigReader {
         return Integer.parseInt(properties.getProperty("implicitWait", "10"));
     }
 
+    public int getExplicitWait() {
+        return Integer.parseInt(properties.getProperty("explicitWait", "10"));
+    }
+
     public int getPageLoadTimeout() {
         return Integer.parseInt(properties.getProperty("pageLoadTimeout", "30"));
     }

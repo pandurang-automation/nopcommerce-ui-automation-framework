@@ -36,7 +36,7 @@ public class WaitUtils {
     }
 
     private static WebDriverWait getWait() {
-        int timeout = ConfigReader.getInstance().getImplicitWait();
+        int timeout = ConfigReader.getInstance().getExplicitWait();
         return new WebDriverWait(
                 DriverManager.getDriver(),
                 Duration.ofSeconds(timeout)

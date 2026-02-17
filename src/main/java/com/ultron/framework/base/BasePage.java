@@ -1,6 +1,9 @@
 package com.ultron.framework.base;
 
 import com.ultron.framework.driver.DriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ultron.framework.utils.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +17,9 @@ import org.openqa.selenium.WebElement;
  */
 public abstract class BasePage {
 
+    private static final Logger logger = LogManager.getLogger(BasePage.class);
+
+
     protected WebDriver getDriver() {
         return DriverManager.getDriver();
     }
@@ -23,18 +29,24 @@ public abstract class BasePage {
     }
 
     protected void click(By locator) {
+        logger.info("Clicking on element: {}", locator);
         WaitUtils.waitForClickability(locator).click();
     }
 
+
     protected void type(By locator, String text) {
+        logger.info("Typing into element: {}", locator);
         WebElement element = WaitUtils.waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
     }
 
+
     protected String getText(By locator) {
+        logger.info("Getting text from element: {}", locator);
         return WaitUtils.waitForVisibility(locator).getText();
     }
+
 
     protected boolean isDisplayed(By locator) {
         try {
