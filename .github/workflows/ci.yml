@@ -22,7 +22,7 @@ jobs:
           cache: 'maven'
 
       - name: Run Automation Tests
-        run: mvn clean test -Denv=qa
+        run: mvn clean test -Denv=qa -Dheadless=true
 
       - name: Upload Surefire Reports
         uses: actions/upload-artifact@v4

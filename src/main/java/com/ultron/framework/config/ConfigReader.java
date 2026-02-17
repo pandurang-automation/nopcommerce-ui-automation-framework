@@ -15,10 +15,11 @@ import java.util.Properties;
  * - Loads environment-specific configuration file
  * - Provides access to configuration values
  * - Ensures single instance (Singleton pattern)
+ * - Supports system property overrides (CI-friendly)
  */
 public class ConfigReader {
 
-    private static ConfigReader instance;
+    private static volatile ConfigReader instance;
     private Properties properties;
 
     private ConfigReader() {
@@ -75,11 +76,12 @@ public class ConfigReader {
     }
 
     // =========================
-    // Clean Getter Methods
+    // Getters
     // =========================
 
     public String getBrowser() {
-        return properties.getProperty("browser");
+        return System.getProperty("browser",
+                properties.getProperty("browser", "chrome"));
     }
 
     public String getBaseUrl() {
@@ -98,16 +100,32 @@ public class ConfigReader {
         return properties.getProperty("password");
     }
 
-
     public int getImplicitWait() {
-        return Integer.parseInt(properties.getProperty("implicitWait", "10"));
+        return Integer.parseInt(
+                properties.getProperty("implicitWait", "10")
+        );
     }
 
     public int getExplicitWait() {
-        return Integer.parseInt(properties.getProperty("explicitWait", "10"));
+        return Integer.parseInt(
+                properties.getProperty("explicitWait", "10")
+        );
     }
 
     public int getPageLoadTimeout() {
-        return Integer.parseInt(properties.getProperty("pageLoadTimeout", "30"));
+        return Integer.parseInt(
+                properties.getProperty("pageLoadTimeout", "30")
+        );
+    }
+
+    /**
+     * Headless mode controlled via system property.
+     * Example:
+     * mvn clean test -Dheadless=true
+     */
+    public boolean isHeadless() {
+        return Boolean.parseBoolean(
+                System.getProperty("headless", "false")
+        );
     }
 }

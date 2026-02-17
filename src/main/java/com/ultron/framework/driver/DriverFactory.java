@@ -1,5 +1,6 @@
 package com.ultron.framework.driver;
 
+import com.ultron.framework.config.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,18 +13,13 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import java.util.Map;
 
 /**
- * DriverFactory is responsible for creating WebDriver instances
- * based on the browser type provided.
+ * DriverFactory
  *
- * Responsibilities:
- * - Setup browser driver binaries using WebDriverManager
- * - Apply browser-specific options
- * - Return a ready-to-use WebDriver instance
- *
- * This design ensures:
- * - Clean separation of concerns
- * - Easy multi-browser support
- * - Scalability for CI/CD and parallel execution
+ * Creates WebDriver instances based on browser type.
+ * Supports:
+ * - Multi-browser
+ * - Headless mode (CI ready)
+ * - Linux-safe execution
  */
 public class DriverFactory {
 
@@ -33,20 +29,21 @@ public class DriverFactory {
     public static WebDriver createDriver(String browser) {
 
         WebDriver driver;
+        boolean isHeadless = ConfigReader.getInstance().isHeadless();
 
         switch (browser.toLowerCase()) {
 
             case "chrome":
+
                 WebDriverManager.chromedriver().setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
 
-                // Window
+                // Window handling
                 chromeOptions.addArguments("--start-maximized");
 
-                // Disable browser popups & password manager
+                // Disable unwanted browser popups
                 chromeOptions.addArguments("--disable-notifications");
-                chromeOptions.addArguments("--disable-save-password-bubble");
                 chromeOptions.addArguments("--disable-infobars");
                 chromeOptions.addArguments("--disable-extensions");
                 chromeOptions.addArguments("--disable-features=PasswordLeakDetection");
@@ -58,22 +55,41 @@ public class DriverFactory {
                         "profile.default_content_setting_values.notifications", 2
                 ));
 
+                // 🔥 CI-safe headless support
+                if (isHeadless) {
+                    chromeOptions.addArguments("--headless=new");
+                    chromeOptions.addArguments("--no-sandbox");
+                    chromeOptions.addArguments("--disable-dev-shm-usage");
+                }
+
                 driver = new ChromeDriver(chromeOptions);
                 break;
 
             case "edge":
+
                 WebDriverManager.edgedriver().setup();
 
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.addArguments("--start-maximized");
 
+                if (isHeadless) {
+                    edgeOptions.addArguments("--headless=new");
+                    edgeOptions.addArguments("--no-sandbox");
+                    edgeOptions.addArguments("--disable-dev-shm-usage");
+                }
+
                 driver = new EdgeDriver(edgeOptions);
                 break;
 
             case "firefox":
+
                 WebDriverManager.firefoxdriver().setup();
 
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+
+                if (isHeadless) {
+                    firefoxOptions.addArguments("--headless");
+                }
 
                 driver = new FirefoxDriver(firefoxOptions);
                 driver.manage().window().maximize();
