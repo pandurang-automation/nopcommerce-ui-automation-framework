@@ -2,13 +2,9 @@ name: Ultron UI Automation CI
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [ main, develop ]
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [ main, develop ]
 
 jobs:
   run-tests:
@@ -23,24 +19,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Cache Maven Dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          cache: 'maven'
 
       - name: Run Automation Tests
-        run: mvn clean test -Denv=qa -Dheadless=true
+        run: mvn clean test -Denv=qa
+
+      - name: Upload Surefire Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Surefire-Reports
+          path: target/surefire-reports/
 
       - name: Upload Extent Report
         uses: actions/upload-artifact@v4
         with:
           name: Extent-Report
-          path: target/ExtentReport.html
-
-      - name: Upload Screenshots
-        uses: actions/upload-artifact@v4
-        with:
-          name: Screenshots
-          path: target/screenshots
+          path: target/
