@@ -9,7 +9,8 @@
 
     <test name="Frontend Tests">
         <classes>
-
+            <class name="com.ultron.tests.saucedemo.LoginTest"/>
+            <class name="com.ultron.tests.saucedemo.LogoutTest"/>
 
         </classes>
 

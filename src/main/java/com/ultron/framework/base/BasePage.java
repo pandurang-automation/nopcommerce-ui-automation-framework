@@ -9,26 +9,8 @@ import org.openqa.selenium.WebElement;
 /**
  * BasePage
  *
- * Architectural Responsibility:
- * -----------------------------
- * Serves as the parent class for all Page Objects.
- *
- * Provides:
- * - Access to WebDriver
- * - Common UI interaction methods
- * - Centralized wait handling
- *
- * Why This Exists:
- * ----------------
- * - Avoid duplication across pages
- * - Keep page classes clean and readable
- * - Enforce consistent interaction strategy
- *
- * Design Principles:
- * ------------------
- * - Single Responsibility Principle
- * - DRY (Don't Repeat Yourself)
- * - Separation of Concerns
+ * Parent class for all Page Objects.
+ * Provides common interaction methods with centralized wait handling.
  */
 public abstract class BasePage {
 
@@ -52,5 +34,13 @@ public abstract class BasePage {
 
     protected String getText(By locator) {
         return WaitUtils.waitForVisibility(locator).getText();
+    }
+
+    protected boolean isDisplayed(By locator) {
+        try {
+            return WaitUtils.waitForVisibility(locator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

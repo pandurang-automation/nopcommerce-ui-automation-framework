@@ -1,0 +1,34 @@
+{
+  "LoginPage": {
+    "username": {
+      "type": "id",
+      "value": "user-name"
+    },
+    "password": {
+      "type": "id",
+      "value": "password"
+    },
+    "loginButton": {
+      "type": "id",
+      "value": "login-button"
+    },
+    "errorMessage": {
+      "type": "css",
+      "value": "h3[data-test='error']"
+    }
+  },
+  "InventoryPage": {
+    "inventoryContainer": {
+      "type": "id",
+      "value": "inventory_container"
+    },
+    "menuButton": {
+      "type": "id",
+      "value": "react-burger-menu-btn"
+    },
+    "logoutLink": {
+      "type": "id",
+      "value": "logout_sidebar_link"
+    }
+  }
+}
