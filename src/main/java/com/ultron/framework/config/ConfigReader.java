@@ -1,10 +1,13 @@
 package com.ultron.framework.config;
 
+import com.ultron.framework.exceptions.ConfigException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * ConfigReader
@@ -18,6 +21,7 @@ import java.util.Properties;
  * - Supports system property overrides (CI-friendly)
  */
 public class ConfigReader {
+    private static final Logger logger = LogManager.getLogger(ConfigReader.class);
 
     private static volatile ConfigReader instance;
     private Properties properties;
@@ -49,7 +53,7 @@ public class ConfigReader {
         List<String> allowedEnvs = Arrays.asList("dev", "qa", "stage");
 
         if (!allowedEnvs.contains(env)) {
-            throw new IllegalArgumentException(
+            throw new ConfigException(
                     "Invalid environment: " + env + ". Allowed values: dev, qa, stage"
             );
         }
@@ -62,14 +66,14 @@ public class ConfigReader {
                              .getResourceAsStream(fileName)) {
 
             if (inputStream == null) {
-                throw new RuntimeException("Configuration file not found: " + fileName);
+                throw new ConfigException("Configuration file not found: " + fileName);
             }
 
             properties.load(inputStream);
-            System.out.println("Loaded configuration for environment: " + env);
+            logger.info("Loaded configuration for environment: {}", env);
 
         } catch (IOException e) {
-            throw new RuntimeException(
+            throw new ConfigException(
                     "Failed to load configuration file for environment: " + env, e
             );
         }

@@ -3,6 +3,7 @@ package com.ultron.framework.data;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ultron.framework.config.ConfigReader;
+import com.ultron.framework.exceptions.DataException;
 
 import java.io.InputStream;
 import java.util.Iterator;
@@ -20,7 +21,7 @@ public class JsonDataReader {
                     .getResourceAsStream(filePath);
 
             if (inputStream == null) {
-                throw new RuntimeException("Test data file not found: " + filePath);
+                throw new DataException("Test data file not found: " + filePath);
             }
 
             ObjectMapper mapper = new ObjectMapper();
@@ -29,7 +30,7 @@ public class JsonDataReader {
             JsonNode dataArray = rootNode.get(dataSetName);
 
             if (dataArray == null || !dataArray.isArray()) {
-                throw new RuntimeException("Dataset not found: " + dataSetName);
+                throw new DataException("Dataset not found: " + dataSetName);
             }
 
             Object[][] data = new Object[dataArray.size()][2];
@@ -49,7 +50,7 @@ public class JsonDataReader {
             return data;
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to read login test data", e);
+            throw new DataException("Failed to read login test data", e);
         }
     }
 }

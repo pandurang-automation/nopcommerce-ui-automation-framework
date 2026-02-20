@@ -7,6 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.ITestResult;
 import com.ultron.framework.utils.ScreenshotUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.ultron.tests.assertions.SoftAssertManager;
 
 /**
  * BaseTest
@@ -30,6 +33,7 @@ import com.ultron.framework.utils.ScreenshotUtils;
  * All test classes must extend this class.
  */
 public abstract class BaseTest {
+    private static final Logger logger = LogManager.getLogger(BaseTest.class);
 
     /**
      * Initializes WebDriver before each test method.
@@ -54,6 +58,7 @@ public abstract class BaseTest {
 
         // Store driver in ThreadLocal
         DriverManager.setDriver(driver);
+        SoftAssertManager.init();
 
     }
 
@@ -66,12 +71,14 @@ public abstract class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
 
+        SoftAssertManager.assertAll();
+
         if (ITestResult.FAILURE == result.getStatus()) {
 
             String testName = result.getName();
             String screenshotPath = ScreenshotUtils.captureScreenshot(testName);
 
-            System.out.println("Screenshot captured at: " + screenshotPath);
+            logger.info("Screenshot captured at: {}", screenshotPath);
         }
 
         DriverManager.quitDriver();

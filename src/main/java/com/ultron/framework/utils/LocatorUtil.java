@@ -3,11 +3,15 @@ package com.ultron.framework.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ultron.framework.config.ConfigReader;
+import com.ultron.framework.exceptions.LocatorException;
 import org.openqa.selenium.By;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 
 public class LocatorUtil {
+    private static final Logger logger = LogManager.getLogger(LocatorUtil.class);
 
     private static JsonNode rootNode;
 
@@ -20,7 +24,7 @@ public class LocatorUtil {
             String application = ConfigReader.getInstance().getApplication();
 
             if (application == null || application.isBlank()) {
-                throw new RuntimeException("Application not defined in config file.");
+                throw new LocatorException("Application not defined in config file.");
             }
 
             String filePath = "applications/" + application + "/locators.json";
@@ -31,16 +35,16 @@ public class LocatorUtil {
                             .getResourceAsStream(filePath);
 
             if (inputStream == null) {
-                throw new RuntimeException("Locator file not found: " + filePath);
+                throw new LocatorException("Locator file not found: " + filePath);
             }
 
             ObjectMapper mapper = new ObjectMapper();
             rootNode = mapper.readTree(inputStream);
 
-            System.out.println("Loaded locators for application: " + application);
+            logger.info("Loaded locators for application: {}", application);
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load locator JSON file", e);
+            throw new LocatorException("Failed to load locator JSON file", e);
         }
     }
 
@@ -49,13 +53,13 @@ public class LocatorUtil {
         JsonNode pageNode = rootNode.get(pageName);
 
         if (pageNode == null) {
-            throw new RuntimeException("Page not found in locators: " + pageName);
+            throw new LocatorException("Page not found in locators: " + pageName);
         }
 
         JsonNode elementNode = pageNode.get(elementName);
 
         if (elementNode == null) {
-            throw new RuntimeException(
+            throw new LocatorException(
                     "Element not found: " + pageName + " -> " + elementName
             );
         }
@@ -69,7 +73,7 @@ public class LocatorUtil {
             case "xpath" -> By.xpath(value);
             case "classname" -> By.className(value);
             case "css" -> By.cssSelector(value);
-            default -> throw new RuntimeException("Invalid locator type: " + type);
+            default -> throw new LocatorException("Invalid locator type: " + type);
         };
     }
 }

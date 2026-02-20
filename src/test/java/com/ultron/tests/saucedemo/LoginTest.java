@@ -7,6 +7,7 @@ import com.ultron.tests.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import com.ultron.tests.assertions.SoftAssertManager;
 
 public class LoginTest extends BaseTest {
 
@@ -39,7 +40,10 @@ public class LoginTest extends BaseTest {
         loginPage.navigateToLoginPage();
         loginPage.login(username, password);
 
-        Assert.assertTrue(loginPage.getErrorMessage().contains("Epic sadface"), "Expected error message not displayed");
-    }
+        SoftAssertManager.get().assertTrue(
+                loginPage.getErrorMessage().contains("Epic sadface"),
+                "Expected error message not displayed"
+        );
+           }
 
 }
