@@ -104,11 +104,6 @@ public class ConfigReader {
         return properties.getProperty("password");
     }
 
-    public int getImplicitWait() {
-        return Integer.parseInt(
-                properties.getProperty("implicitWait", "10")
-        );
-    }
 
     public int getExplicitWait() {
         return Integer.parseInt(

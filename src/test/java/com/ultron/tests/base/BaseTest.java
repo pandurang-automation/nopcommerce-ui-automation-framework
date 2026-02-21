@@ -73,14 +73,6 @@ public abstract class BaseTest {
 
         SoftAssertManager.assertAll();
 
-        if (ITestResult.FAILURE == result.getStatus()) {
-
-            String testName = result.getName();
-            String screenshotPath = ScreenshotUtils.captureScreenshot(testName);
-
-            logger.info("Screenshot captured at: {}", screenshotPath);
-        }
-
         DriverManager.quitDriver();
     }
 

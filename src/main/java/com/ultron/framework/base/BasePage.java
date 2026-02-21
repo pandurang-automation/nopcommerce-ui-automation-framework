@@ -27,18 +27,42 @@ public abstract class BasePage {
     protected WebElement find(By locator) {
         return WaitUtils.waitForVisibility(locator);
     }
+    protected WebElement find(By locator, int timeoutInSeconds) {
+        return WaitUtils.waitForVisibility(locator, timeoutInSeconds);
+    }
 
     protected void click(By locator) {
+
         logger.info("Clicking on element: {}", locator);
-        WaitUtils.waitForClickability(locator).click();
+
+        try {
+            WaitUtils.waitForClickability(locator).click();
+        } catch (org.openqa.selenium.StaleElementReferenceException e) {
+
+            logger.warn("Stale element detected. Retrying click for locator: {}", locator);
+
+            WaitUtils.waitForClickability(locator).click();
+        }
     }
 
 
     protected void type(By locator, String text) {
+
         logger.info("Typing into element: {}", locator);
-        WebElement element = WaitUtils.waitForVisibility(locator);
-        element.clear();
-        element.sendKeys(text);
+
+        try {
+            WebElement element = WaitUtils.waitForVisibility(locator);
+            element.clear();
+            element.sendKeys(text);
+
+        } catch (org.openqa.selenium.StaleElementReferenceException e) {
+
+            logger.warn("Stale element detected while typing. Retrying for locator: {}", locator);
+
+            WebElement element = WaitUtils.waitForVisibility(locator);
+            element.clear();
+            element.sendKeys(text);
+        }
     }
 
 

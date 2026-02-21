@@ -36,15 +36,37 @@ public class WaitUtils {
     }
 
     private static WebDriverWait getWait() {
+
         int timeout = ConfigReader.getInstance().getExplicitWait();
-        return new WebDriverWait(
+
+        WebDriverWait wait = new WebDriverWait(
                 DriverManager.getDriver(),
                 Duration.ofSeconds(timeout)
         );
+
+        wait.ignoring(org.openqa.selenium.StaleElementReferenceException.class);
+
+        return wait;
+    }
+    private static WebDriverWait getWait(int timeoutInSeconds) {
+
+        WebDriverWait wait = new WebDriverWait(
+                DriverManager.getDriver(),
+                Duration.ofSeconds(timeoutInSeconds)
+        );
+
+        wait.ignoring(org.openqa.selenium.StaleElementReferenceException.class);
+
+        return wait;
     }
 
     public static WebElement waitForVisibility(By locator) {
         return getWait().until(
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        );
+    }
+    public static WebElement waitForVisibility(By locator, int timeoutInSeconds) {
+        return getWait(timeoutInSeconds).until(
                 ExpectedConditions.visibilityOfElementLocated(locator)
         );
     }
@@ -58,6 +80,21 @@ public class WaitUtils {
     public static boolean waitForUrlContains(String partialUrl) {
         return getWait().until(
                 ExpectedConditions.urlContains(partialUrl)
+        );
+    }
+    public static WebElement waitForPresence(By locator) {
+        return getWait().until(
+                ExpectedConditions.presenceOfElementLocated(locator)
+        );
+    }
+    public static boolean waitForInvisibility(By locator) {
+        return getWait().until(
+                ExpectedConditions.invisibilityOfElementLocated(locator)
+        );
+    }
+    public static boolean waitForTextToBePresent(By locator, String expectedText) {
+        return getWait().until(
+                ExpectedConditions.textToBePresentInElementLocated(locator, expectedText)
         );
     }
 }
