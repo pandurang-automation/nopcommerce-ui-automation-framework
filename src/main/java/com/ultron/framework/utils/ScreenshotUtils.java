@@ -1,6 +1,7 @@
 package com.ultron.framework.utils;
 
 import com.ultron.framework.driver.DriverManager;
+import com.ultron.framework.config.ConfigReader;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -16,16 +17,29 @@ public class ScreenshotUtils {
         // Prevent instantiation
     }
 
-    public static String captureScreenshot(String testName) {
+    public static String captureScreenshot(String testName,
+                                           String dataInfo,
+                                           int retryCount) {
 
-        TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
+        TakesScreenshot ts =
+                (TakesScreenshot) DriverManager.getDriver();
+
         File source = ts.getScreenshotAs(OutputType.FILE);
 
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
                 .format(new Date());
 
+        String browser = ConfigReader.getInstance().getBrowser();
+
         String screenshotDir = "target/screenshots";
-        String fileName = testName + "_" + timestamp + ".png";
+
+        String fileName = testName
+                + (dataInfo != null ? "_" + dataInfo : "")
+                + "_" + browser
+                + "_retry" + retryCount
+                + "_" + timestamp
+                + ".png";
+
         String filePath = screenshotDir + "/" + fileName;
 
         try {
@@ -40,7 +54,6 @@ public class ScreenshotUtils {
             throw new RuntimeException("Failed to capture screenshot", e);
         }
 
-        return "screenshots/" + fileName;   //
+        return "screenshots/" + fileName;
     }
-
 }

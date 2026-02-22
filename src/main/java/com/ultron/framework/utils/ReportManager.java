@@ -2,6 +2,7 @@ package com.ultron.framework.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.ultron.framework.config.ConfigReader;
 
 public class ReportManager {
 
@@ -22,9 +23,13 @@ public class ReportManager {
             extent = new ExtentReports();
             extent.attachReporter(spark);
 
-            extent.setSystemInfo("Project", "NopCommerce");
+            ConfigReader config = ConfigReader.getInstance();
+
+            extent.setSystemInfo("Project", config.getApplication());
+            extent.setSystemInfo("Environment", System.getProperty("env", "qa"));
+            extent.setSystemInfo("Browser", config.getBrowser());
+            extent.setSystemInfo("Headless", String.valueOf(config.isHeadless()));
             extent.setSystemInfo("Tester", System.getProperty("user.name"));
-            extent.setSystemInfo("Environment", "Stage");
         }
 
         return extent;

@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LogoutTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"smoke", "regression", "logout"})
     public void verifyLogout() {
 
         LoginPage loginPage = new LoginPage();

@@ -24,6 +24,10 @@
         <restassured.version>5.4.0</restassured.version>
         <surefire.version>3.2.5</surefire.version>
         <jackson.version>2.15.2</jackson.version>
+        <groups></groups>
+        <suiteXmlFile>testng.xml</suiteXmlFile>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -134,8 +138,11 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+
+                    <!-- Allow group filtering via command line -->
+                    <groups>${groups}</groups>
                 </configuration>
             </plugin>
 

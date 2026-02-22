@@ -16,7 +16,7 @@ public class LoginTest extends BaseTest {
         return JsonDataReader.getLoginData("validLogin");
     }
 
-    @Test(dataProvider = "validLoginData")
+    @Test(dataProvider = "validLoginData", groups = {"smoke", "regression", "login"})
     public void verifyValidLogin(String username, String password) {
 
         LoginPage loginPage = new LoginPage();
@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest {
         return JsonDataReader.getLoginData("invalidLogin");
     }
 
-    @Test(dataProvider = "invalidLoginData")
+    @Test(dataProvider = "invalidLoginData", groups = {"regression", "login"})
     public void verifyInvalidLogin(String username, String password) {
 
         LoginPage loginPage = new LoginPage();
